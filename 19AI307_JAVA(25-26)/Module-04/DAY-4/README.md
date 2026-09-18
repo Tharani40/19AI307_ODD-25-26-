@@ -1,24 +1,25 @@
-# Ex.No:4(C)  COMPOSITION IN JAVA
+# Ex.No:4(D) DESIGN PATTERN -- ABSTRACT FACTORY
 
 ## QUESTION:
-Implement a system where a Library contains multiple Book objects. Each Book is created inside the Library. Books can't exist independently (Composition).
+You are asked to simulate a simple Shape Drawing Tool using the Factory Design Pattern in Java.
+
+You will implement a Shape interface with concrete classes for different shapes (Circle, Square, Rectangle). Using a ShapeFactory, your program will take shape names from user input and draw them accordingly. If the shape is unknown, print an error message.
 
 ## AIM:
-To implement a Composition relationship in Java where a Library contains multiple Book objects, and each Book is created inside the Library, meaning Books cannot exist independently.
+To implement the Factory Design Pattern in Java to create and draw different shapes like Circle, Square, and Rectangle based on user input.
 
 ## ALGORITHM :
+1. Start the program and create a ShapeFactory object.
 
-1. Start the program.
+2. Read shape name input from the user in a loop.
 
-2. Create a Library object.
+3. If input is "exit", stop the program.
 
-3. Read number of books n.
+4. Pass input to ShapeFactory to create the required shape object.
 
-4. Read title and author for each book.
+5. If shape is valid, call the draw() method; otherwise print an error message.
 
-5. Create Book objects inside Library and add them to a list.
-
-6. Display all books in the Library.
+6. Repeat steps 2–5 until exit.
 
 7. End the program.
 
@@ -26,74 +27,86 @@ To implement a Composition relationship in Java where a Library contains multipl
 ## PROGRAM:
  ```
 /*
-Program to implement a Composition Concepts in Java
+Program to implement a Abstract Factory Pattern using Java
 Developed by: Nikshitha G
 RegisterNumber: 212223110031
 */
 ```
 
 ## SOURCE CODE:
-
 ```
 import java.util.*;
 
-public class CompositionExample {
+interface Shape {
+    void draw();
+}
+
+class Circle implements Shape {
+
+    public void draw() {
+        System.out.println("Drawing Circle");
+    }
+}
+
+class Square implements Shape {
+
+    public void draw() {
+        System.out.println("Drawing Square");
+    }
+}
+
+class Rectangle implements Shape {
+
+    public void draw() {
+        System.out.println("Drawing Rectangle");
+    }
+}
+
+class ShapeFactory {
+
+    public Shape getShape(String shapeType) {
+
+        if (shapeType.equalsIgnoreCase("circle")) {
+            return new Circle();
+        }
+        else if (shapeType.equalsIgnoreCase("square")) {
+            return new Square();
+        }
+        else if (shapeType.equalsIgnoreCase("rectangle")) {
+            return new Rectangle();
+        }
+
+        return null;
+    }
+}
+
+public class Main {
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        Library library = new Library();
+        ShapeFactory factory = new ShapeFactory();
 
-        int n = sc.nextInt();
-        sc.nextLine();
+        while (true) {
 
-        for (int i = 0; i < n; i++) {
+            String input = sc.nextLine();
 
-            String title = sc.nextLine();
-            String author = sc.nextLine();
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
 
-            library.addBook(title, author);
+            Shape shape = factory.getShape(input);
+
+            if (shape != null) {
+                shape.draw();
+            }
+            else {
+                System.out.println("Invalid shape: " + input);
+            }
         }
-
-        library.showBooks();
 
         sc.close();
-    }
-}
-
-class Book {
-
-    private String title;
-    private String author;
-
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
-    }
-
-    public String getDetails() {
-        return title + " by " + author;
-    }
-}
-
-class Library {
-
-    private List<Book> books = new ArrayList<>();
-
-    public void addBook(String title, String author) {
-
-        Book book = new Book(title, author);
-
-        books.add(book);
-    }
-
-    public void showBooks() {
-
-        System.out.println("Books in Library:");
-
-        for (Book book : books) {
-            System.out.println("- " + book.getDetails());
-        }
     }
 }
 ```
@@ -101,7 +114,7 @@ class Library {
 
 ## OUTPUT:
 
-<img width="746" height="414" alt="image" src="https://github.com/user-attachments/assets/0550a18a-be97-4a07-9062-58af95c60b84" />
+<img width="509" height="374" alt="image" src="https://github.com/user-attachments/assets/d39a2b9d-5292-45ca-9ce3-9ce109940071" />
 
 ## RESULT:
-Thus the program to implement the composition was executed successfully.
+Thus, the program to implement the Factory Design Pattern for creating and drawing different shapes (Circle, Square, Rectangle) based on user input was successfully executed and the output was obtained.
